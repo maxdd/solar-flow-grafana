@@ -12,6 +12,7 @@ interface PointProps {
   pointStyle: { stroke: string; filter: string };
   icon: string;
   showLegend?: boolean;
+  socInLegend?: boolean;
   measurementUnit: MeasurementUnit;
   valuePlacement?: 'top' | 'bottom';
   energyDirection?: 'incoming' | 'outgoing' | 'none';
@@ -59,8 +60,10 @@ export function Point(props: Readonly<PointProps>) {
     : props.pointStyle;
 
   const hasSoc = props.subValue !== undefined && props.subValue !== 0;
-  // Keep the icon prominent even when SoC is displayed
-  const iconSize = hasSoc ? Math.round(Math.max(68, 76 - (socSize - 12) * 0.45)) : 80;
+  const socInLegend = !!props.socInLegend;
+  // Keep the icon prominent even when SoC is displayed; in legend mode the
+  // circle only holds the icon, which keeps its full size.
+  const iconSize = hasSoc && !socInLegend ? Math.round(Math.max(68, 76 - (socSize - 12) * 0.45)) : 80;
   const iconX = -iconSize / 2;
 
   // Vertically group the icon and SoC together with tight, cohesive spacing
@@ -68,7 +71,7 @@ export function Point(props: Readonly<PointProps>) {
   const totalHeight = iconSize + gap + socSize;
   const stackTop = -Math.round(totalHeight / 2) + 1;
 
-  const iconY = hasSoc ? stackTop : -40;
+  const iconY = hasSoc && !socInLegend ? stackTop : -40;
   // Position SoC text comfortably inside the circle with clean margin from the bottom curve
   const socY = stackTop + iconSize + gap + Math.round(socSize * 0.85);
 
@@ -86,12 +89,17 @@ export function Point(props: Readonly<PointProps>) {
         {displayValue + ' ' + displayUnit}
       </text>
       {props.showLegend && (
-        <text fontSize={labelSize} fill={fontColor} x="0" y={legendY} textAnchor="middle">{props.label}</text>
+        <text fontSize={labelSize} fill={fontColor} x="0" y={legendY} textAnchor="middle">
+          {props.label}
+          {hasSoc && socInLegend && (
+            <tspan fontSize={socSize} fontWeight={600}>{` · ${props.subValue}%`}</tspan>
+          )}
+        </text>
       )}
       <svg x={iconX} y={iconY} height={iconSize} width={iconSize} fill={iconColor} viewBox="0 -960 960 960">
         <path d={props.icon} />
       </svg>
-      {hasSoc && (
+      {hasSoc && !socInLegend && (
         <text fontSize={socSize} fill={fontColor} x="0" y={socY} textAnchor="middle">{props.subValue + '%'}</text>
       )}
     </g>

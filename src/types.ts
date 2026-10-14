@@ -17,6 +17,10 @@ export interface SimpleOptions {
   socFontSize?: number;
   labelFontSize?: number;
 
+  // Layout
+  // Render the SoC in the legend line instead of inside the source circle.
+  socInLegend: boolean;
+
   // Additional sources (up to 3)
   additionalSourceCount: number;
 

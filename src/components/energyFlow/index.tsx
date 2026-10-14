@@ -293,6 +293,7 @@ export const EnergyFlow: React.FC<EnergyFlowProps> = ({ data, options, width, he
             showLegend={options.showLegend}
             value={srcFlow.value}
             subValue={srcFlow.soc}
+            socInLegend={options.socInLegend}
             powerFontSize={options.powerFontSize}
             socFontSize={options.socFontSize}
             labelFontSize={options.labelFontSize}

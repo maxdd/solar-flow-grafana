@@ -300,6 +300,13 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOption
       defaultValue: false,
       category: ['Layout'],
     })
+    .addBooleanSwitch({
+      path: 'socInLegend',
+      name: 'SoC in the legend text',
+      description: 'Render the SoC percentage as part of the legend line instead of inside the source circle',
+      defaultValue: false,
+      category: ['Layout'],
+    })
 
     // ── Colors ────────────────────────────────────────────
     .addColorPicker({
