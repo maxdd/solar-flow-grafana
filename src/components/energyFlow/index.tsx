@@ -31,12 +31,14 @@ const extractFieldValue = (series: any[], fieldName: string): number => {
 
 // ── Layout constants ──────────────────────────────────────
 const PV_CENTER: PointPosition = { x: 275, y: 90 };
+// Load/Grid sides follow the "Swap Grid and Load" panel option; these are the
+// stock positions (Load left, Grid right). The old LOAD_LINE_END/GRID_LINE_END
+// constants equalled the centres, so the centres are used directly for the
+// flow lines.
 const LOAD_CENTER: PointPosition = { x: 75, y: 310 };
 const GRID_CENTER: PointPosition = { x: 475, y: 310 };
 
 const PV_LINE_END: PointPosition = { x: 275, y: 145 };
-const LOAD_LINE_END: PointPosition = { x: 75, y: 310 };
-const GRID_LINE_END: PointPosition = { x: 475, y: 310 };
 
 const MAIN_HUB: PointPosition = { x: 275, y: 310 };
 
@@ -157,6 +159,10 @@ export const EnergyFlow: React.FC<EnergyFlowProps> = ({ data, options, width, he
   const sourceCount = sourceConfigs.length;
   const centers = getAdditionalCenters(sourceCount, additionalY);
 
+  // Flip Load/Grid according to the panel option.
+  const loadCenter = options.swapLoadGrid ? GRID_CENTER : LOAD_CENTER;
+  const gridCenter = options.swapLoadGrid ? LOAD_CENTER : GRID_CENTER;
+
   // Determine which sources are visible (for viewBox calculation)
   const anySourceVisible = flowData.additionalSources.some((s, i) =>
     Math.abs(s.value) > options.showEnergyThreshold || sourceConfigs[i]?.alwaysShow
@@ -195,8 +201,8 @@ export const EnergyFlow: React.FC<EnergyFlowProps> = ({ data, options, width, he
       <EnergyLines
         flow={flowData}
         pvPoint={PV_LINE_END}
-        loadPoint={LOAD_LINE_END}
-        gridPoint={GRID_LINE_END}
+        loadPoint={loadCenter}
+        gridPoint={gridCenter}
         additionalSources={additionalSourceLines}
         subJunction={subJunction}
         linesColor={color('linesColor')}
@@ -245,9 +251,9 @@ export const EnergyFlow: React.FC<EnergyFlowProps> = ({ data, options, width, he
         animationDuration={getAnimDuration(flowData.pv, options.measurementUnit, speedRef)}
       />
 
-      {/* Load — middle left */}
+      {/* Load — middle (side follows the Swap Grid and Load option) */}
       <Point
-        x={LOAD_CENTER.x} y={LOAD_CENTER.y}
+        x={loadCenter.x} y={loadCenter.y}
         label="Load"
         measurementUnit={options.measurementUnit}
         showLegend={options.showLegend}
@@ -261,9 +267,9 @@ export const EnergyFlow: React.FC<EnergyFlowProps> = ({ data, options, width, he
         animationDuration={getAnimDuration(flowData.load, options.measurementUnit, speedRef)}
       />
 
-      {/* Grid — middle right */}
+      {/* Grid — middle (side follows the Swap Grid and Load option) */}
       <Point
-        x={GRID_CENTER.x} y={GRID_CENTER.y}
+        x={gridCenter.x} y={gridCenter.y}
         label="Grid"
         measurementUnit={options.measurementUnit}
         showLegend={options.showLegend}

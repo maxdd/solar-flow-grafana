@@ -20,6 +20,8 @@ export interface SimpleOptions {
   // Layout
   // Render the SoC in the legend line instead of inside the source circle.
   socInLegend: boolean;
+  // Flip the Load/Grid sides (default keeps the stock layout).
+  swapLoadGrid: boolean;
 
   // Additional sources (up to 3)
   additionalSourceCount: number;

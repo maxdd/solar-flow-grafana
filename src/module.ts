@@ -307,6 +307,13 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOption
       defaultValue: false,
       category: ['Layout'],
     })
+    .addBooleanSwitch({
+      path: 'swapLoadGrid',
+      name: 'Swap Grid and Load',
+      description: 'Draw Load on the right and Grid on the left (off = stock layout: Load left, Grid right)',
+      defaultValue: false,
+      category: ['Layout'],
+    })
 
     // ── Colors ────────────────────────────────────────────
     .addColorPicker({
