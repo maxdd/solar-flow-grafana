@@ -33,6 +33,7 @@ export interface SimpleOptions {
   additionalSourceIcon: string;
   additionalSourceColor: string;
   additionalSourceAlwaysShow: boolean;
+  additionalSourceInvertSign: boolean;
 
   // Source 2
   additionalSource2LoadQuery: any;
@@ -41,6 +42,7 @@ export interface SimpleOptions {
   additionalSource2Icon: string;
   additionalSource2Color: string;
   additionalSource2AlwaysShow: boolean;
+  additionalSource2InvertSign: boolean;
 
   // Source 3
   additionalSource3LoadQuery: any;
@@ -49,4 +51,5 @@ export interface SimpleOptions {
   additionalSource3Icon: string;
   additionalSource3Color: string;
   additionalSource3AlwaysShow: boolean;
+  additionalSource3InvertSign: boolean;
 }

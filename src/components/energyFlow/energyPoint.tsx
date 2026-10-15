@@ -13,6 +13,7 @@ interface PointProps {
   icon: string;
   showLegend?: boolean;
   socInLegend?: boolean;
+  invertSign?: boolean;
   measurementUnit: MeasurementUnit;
   valuePlacement?: 'top' | 'bottom';
   energyDirection?: 'incoming' | 'outgoing' | 'none';
@@ -49,7 +50,11 @@ export function Point(props: Readonly<PointProps>) {
   const socSize = props.socFontSize ?? 12;
   const labelSize = props.labelFontSize ?? 16;
 
-  const { displayValue, displayUnit } = formatEnergyValue(props.value, props.measurementUnit);
+  // ``invertSign`` flips only the printed value (some integrations report the
+  // source with the opposite sign convention); the flow direction keeps using
+  // the raw value.
+  const shownValue = props.invertSign ? -props.value : props.value;
+  const { displayValue, displayUnit } = formatEnergyValue(shownValue, props.measurementUnit);
   const valueAtBottom = props.valuePlacement === 'bottom';
   const valueY = valueAtBottom ? OUTER_RADIUS + 7 + powerSize : -(OUTER_RADIUS + 7);
   const legendY = valueAtBottom ? valueY + 4 + labelSize : OUTER_RADIUS + 8 + labelSize;

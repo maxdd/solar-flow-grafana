@@ -113,6 +113,14 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOption
       category: ['Additional Sources', 'Source 1'],
       showIf: (opts) => (opts.additionalSourceCount ?? 0) >= 1,
     })
+    .addBooleanSwitch({
+      path: 'additionalSourceInvertSign',
+      name: 'Invert displayed sign',
+      description: 'Show the opposite sign in the value text; the flow animation still follows the real sign',
+      defaultValue: false,
+      category: ['Additional Sources', 'Source 1'],
+      showIf: (opts) => (opts.additionalSourceCount ?? 0) >= 1,
+    })
 
     // ── Source 2 ──────────────────────────────────────────
     .addFieldNamePicker({
@@ -162,6 +170,14 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOption
       category: ['Additional Sources', 'Source 2'],
       showIf: (opts) => (opts.additionalSourceCount ?? 0) >= 2,
     })
+    .addBooleanSwitch({
+      path: 'additionalSource2InvertSign',
+      name: 'Invert displayed sign',
+      description: 'Show the opposite sign in the value text; the flow animation still follows the real sign',
+      defaultValue: false,
+      category: ['Additional Sources', 'Source 2'],
+      showIf: (opts) => (opts.additionalSourceCount ?? 0) >= 2,
+    })
 
     // ── Source 3 ──────────────────────────────────────────
     .addFieldNamePicker({
@@ -207,6 +223,14 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOption
       path: 'additionalSource3AlwaysShow',
       name: 'Always Show',
       description: 'Show even when value is 0',
+      defaultValue: false,
+      category: ['Additional Sources', 'Source 3'],
+      showIf: (opts) => (opts.additionalSourceCount ?? 0) >= 3,
+    })
+    .addBooleanSwitch({
+      path: 'additionalSource3InvertSign',
+      name: 'Invert displayed sign',
+      description: 'Show the opposite sign in the value text; the flow animation still follows the real sign',
       defaultValue: false,
       category: ['Additional Sources', 'Source 3'],
       showIf: (opts) => (opts.additionalSourceCount ?? 0) >= 3,

@@ -80,6 +80,7 @@ interface SourceConfig {
   icon: string;
   colorKey: keyof SimpleOptions;
   alwaysShow: boolean;
+  invertSign: boolean;
 }
 
 function getSourceConfigs(options: SimpleOptions): SourceConfig[] {
@@ -93,6 +94,7 @@ function getSourceConfigs(options: SimpleOptions): SourceConfig[] {
       icon: options.additionalSourceIcon ?? 'battery',
       colorKey: 'additionalSourceColor',
       alwaysShow: options.additionalSourceAlwaysShow ?? false,
+      invertSign: options.additionalSourceInvertSign ?? false,
     });
   }
   if (count >= 2) {
@@ -103,6 +105,7 @@ function getSourceConfigs(options: SimpleOptions): SourceConfig[] {
       icon: options.additionalSource2Icon ?? 'evPanel',
       colorKey: 'additionalSource2Color',
       alwaysShow: options.additionalSource2AlwaysShow ?? false,
+      invertSign: options.additionalSource2InvertSign ?? false,
     });
   }
   if (count >= 3) {
@@ -113,6 +116,7 @@ function getSourceConfigs(options: SimpleOptions): SourceConfig[] {
       icon: options.additionalSource3Icon ?? 'evPanel',
       colorKey: 'additionalSource3Color',
       alwaysShow: options.additionalSource3AlwaysShow ?? false,
+      invertSign: options.additionalSource3InvertSign ?? false,
     });
   }
   return configs;
@@ -300,6 +304,7 @@ export const EnergyFlow: React.FC<EnergyFlowProps> = ({ data, options, width, he
             value={srcFlow.value}
             subValue={srcFlow.soc}
             socInLegend={options.socInLegend}
+            invertSign={cfg.invertSign}
             powerFontSize={options.powerFontSize}
             socFontSize={options.socFontSize}
             labelFontSize={options.labelFontSize}
